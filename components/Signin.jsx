@@ -1,20 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function Signin() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignin = async(event) => {
+    event.preventDefault();
+
+    await axios.post("http://localhost:80/startup-inspired-game/api/signin.php", {
+      email,
+      password
+    })
+    .then((res) => {
+        alert(res.data.message);
+    })
+  }
+
   return (
     <div className='signin'>
         <h5>Signin</h5>
-        <form className='signinFrm'>
+        <form className='signinFrm needs-validation' noValidate>
           <div className='mb-3'>
-            <label htmlFor='emailinp' className='form-label'>Email</label>
-            <input type='email' className='form-control' id='emailinp' placeholder='Enter email' />
+            <label htmlFor='emailInp' className='form-label'>Email</label>
+            <input onChange={(e)=> {setEmail(e.target.value)}} type='email' className='form-control' id='emailInp' name='emailInp' placeholder='Enter email' required autoComplete='on'/>
           </div>
           <div className='mb-3'>
             <label htmlFor='passwordInp' className='form-label'>Password</label>
-            <input type='password' className='form-control' id='passwordInp' placeholder='Enter password' />
+            <input onChange={(e)=> {setPassword(e.target.value)}} type='password' className='form-control' id='passwordInp' name='passInp' placeholder='Enter password' required autoComplete='on'/>
           </div>
           <div className='mb-3'>
-            <button type='submit' className='btn btn-primary'>Signin</button>
+            <button onClick={handleSignin} type='submit' className='btn btn-primary'>Signin</button>
           </div>
         </form>
     </div>
