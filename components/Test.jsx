@@ -1,7 +1,12 @@
+import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 
+let nextId = 0;
+
 function Test() {
-    const [wordbank, setWordbank] = useState(["apple", "ball", "cat", "dog", "bird","car", "mouse", "keyboard", "monitor", "biscuit"]);
+    const [newword, setNewword] = useState('');
+    const [wordbank, setWordbank] = useState([]);
+    
     const [answer, setAnswer] = useState("");
     const [score, setScore] = useState(0);
     const [statusCheck, setStatusCheck] = useState("");
@@ -69,22 +74,56 @@ function Test() {
         clearTimer(getDeadTime());
     }
 
-    function check(e) {
+    const removeWord = (x) => {
+        setWordbank(
+            wordbank.filter(value => value.name !== x)
+        )
+    }
+
+    const check = async (e) => {
         e.preventDefault();
-        var checker = wordbank.includes(answer);
-        if (checker) {
+
+        await axios.post('http://localhost:80/startup-inspired-game/api/wordbank.php', {
+            category: 'fruits',
+            word: answer
+        }).then((res) => {
+            console.log(res);
+        })
+
+        var checker = wordbank.filter(value => value.name === answer);
+        if (checker.length > 0) {
             setScore(score + 1);
             setStatusCheck("Correct!");
-            
+            removeWord(answer);
         } else {
             setStatusCheck("Incorrect!");
         }
     }
   return (
     <div className='test'>
+        <div>
+            <form onSubmit={(e)=>e.preventDefault()}>
+                <input
+                    value={newword}
+                    onChange={e => setNewword(e.target.value)}
+                />
+                <button onClick={() => {
+                    setWordbank([
+                    ...wordbank,
+                    { id: nextId++, name: newword }
+                    ]);
+                }}>Add</button>
+                <ul>
+                    {wordbank.map(artist => (
+                    <li key={artist.id}>{artist.name}</li>
+                    ))}
+                </ul>
+            </form>
+        </div>
+        
         <div className='timerdiv'>
             <h2>{timer}</h2>
-            {/* <button onClick={onClickReset}>Reset</button> */}
+            <button onClick={onClickReset}>Reset</button>
         </div>
         <div className='scorediv'>
             <h1>Your Score: {score}</h1>
