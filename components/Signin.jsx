@@ -14,6 +14,7 @@ function Signin() {
       password
     })
     .then((res) => {
+        // localStorage.setItem("token", res);
         alert(res.data.message);
     })
   }

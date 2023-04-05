@@ -1,5 +1,6 @@
 <?php
     include "./dbconnect.php";
+    
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
@@ -14,7 +15,8 @@
     $response = $query->fetch(PDO::FETCH_ASSOC);
 
     if($response) {
-        $response = ['status' => 1, 'message' => 'Login Successful.'];
+        $token = "tokenhere";
+        $response = ['status' => 1, 'message' => 'Signin Successful.', 'token' => '$token'];
     } else {
         $response = ['status' => 0, 'message' => 'Email and Password does not match.'];
     }
