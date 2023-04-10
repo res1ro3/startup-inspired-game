@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
+import Gameplay from './Gameplay';
 
 let nextId = 0;
 
@@ -13,6 +14,8 @@ function Test() {
 
     const Ref = useRef(null);
     const [timer, setTimer] = useState("00:00:00");
+
+    const [testvar, setTestvar] = useState("Hi Test");
 
     const getTimeRemaining = (e) => {
         const total = Date.parse(e) - Date.parse(new Date());
@@ -87,7 +90,7 @@ function Test() {
             category: 'fruits',
             word: answer
         }).then((res) => {
-            console.log(res);
+            console.log(res.data.message);
         })
 
         var checker = wordbank.filter(value => value.name === answer);
@@ -99,6 +102,15 @@ function Test() {
             setStatusCheck("Incorrect!");
         }
     }
+
+    const resetAnswers = async (e) => {
+        e.preventDefault();
+        await axios.post('http://localhost:80/startup-inspired-game/api/reset.php')
+        .then((res) => {
+            console.log(res);
+        })
+    }
+
   return (
     <div className='test'>
         <div>
@@ -137,6 +149,9 @@ function Test() {
                 <button type="submit">Submit</button>
             </div>
         </form>
+
+        <button onClick={resetAnswers}>RESET ANSWERS</button>
+        <Gameplay testvar={timer} />
     </div>
     )
 } 
