@@ -9,7 +9,7 @@
     $submitted = json_decode( file_get_contents('php://input') );
 
     function addIncorrect($conn, $submitted) {
-        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`) VALUES ('1', :cat, :wd, '0')";
+        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES ('1', :cat, :wd, '0', '1')";
         $query = $conn->prepare($sql);
         $query->bindParam(':cat', $submitted->category);
         $query->bindParam(':wd', $submitted->word);
@@ -17,7 +17,7 @@
     }
 
     function addCorrect($conn, $submitted) {
-        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`) VALUES ('1', :cat, :wd, '1')";
+        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES ('1', :cat, :wd, '1', '1')";
         $query = $conn->prepare($sql);
         $query->bindParam(':cat', $submitted->category);
         $query->bindParam(':wd', $submitted->word);

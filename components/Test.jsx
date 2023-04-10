@@ -15,7 +15,12 @@ function Test() {
     const Ref = useRef(null);
     const [timer, setTimer] = useState("00:00:00");
 
-    const [testvar, setTestvar] = useState("Hi Test");
+    const getScore = async () => {
+        await axios.get('http://localhost:80/startup-inspired-game/api/score.php')
+        .then((res) => {
+            setScore(res.data);
+        })
+    } 
 
     const getTimeRemaining = (e) => {
         const total = Date.parse(e) - Date.parse(new Date());
@@ -71,6 +76,7 @@ function Test() {
 
     useEffect(() => {
         // clearTimer(getDeadTime());
+        getScore();
     }, []);
 
     const onClickReset = () => {
@@ -101,11 +107,23 @@ function Test() {
         } else {
             setStatusCheck("Incorrect!");
         }
+        getScore();
     }
 
-    const resetAnswers = async (e) => {
+    const resetAnswers = async (e, resType) => {
         e.preventDefault();
-        await axios.post('http://localhost:80/startup-inspired-game/api/reset.php')
+        await axios.post('http://localhost:80/startup-inspired-game/api/reset.php', {
+            type: 'answers'
+        })
+        .then((res) => {
+            console.log(res);
+        })
+    }
+    const resetResponses = async (e, resType) => {
+        e.preventDefault();
+        await axios.post('http://localhost:80/startup-inspired-game/api/reset.php', {
+            type: 'responses'
+        })
         .then((res) => {
             console.log(res);
         })
@@ -151,6 +169,7 @@ function Test() {
         </form>
 
         <button onClick={resetAnswers}>RESET ANSWERS</button>
+        <button onClick={resetResponses}>RESET RESPONSES</button>
         <Gameplay testvar={timer} />
     </div>
     )
