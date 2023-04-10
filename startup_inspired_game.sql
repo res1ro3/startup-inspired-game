@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2023 at 05:38 AM
+-- Generation Time: Apr 10, 2023 at 01:19 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -28,10 +28,42 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `games` (
-  `game_id` int(32) NOT NULL,
-  `user_id` int(32) NOT NULL,
-  `score` int(32) NOT NULL
+  `game_id` int(16) NOT NULL,
+  `category` varchar(64) NOT NULL,
+  `is_started` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `games`
+--
+
+INSERT INTO `games` (`game_id`, `category`, `is_started`) VALUES
+(1, 'fruits', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `responses`
+--
+
+CREATE TABLE `responses` (
+  `response_id` int(16) NOT NULL,
+  `user_id` int(16) NOT NULL,
+  `category` varchar(64) NOT NULL,
+  `word` varchar(64) NOT NULL,
+  `is_correct` int(1) NOT NULL,
+  `game_id` int(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `responses`
+--
+
+INSERT INTO `responses` (`response_id`, `user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES
+(1, 1, 'fruits', 'apple', 1, 1),
+(2, 1, 'fruits', 'banana', 1, 1),
+(3, 1, 'fruits', 'baka', 0, 1),
+(4, 1, 'fruits', 'saging', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -62,7 +94,7 @@ INSERT INTO `users` (`user_id`, `email`, `password`, `account_type`) VALUES
 CREATE TABLE `wordbank` (
   `wordbank_id` int(32) NOT NULL,
   `category` varchar(64) NOT NULL,
-  `word` varchar(32) NOT NULL,
+  `word` varchar(64) NOT NULL,
   `is_answered` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -71,8 +103,8 @@ CREATE TABLE `wordbank` (
 --
 
 INSERT INTO `wordbank` (`wordbank_id`, `category`, `word`, `is_answered`) VALUES
-(1, 'fruits', 'apple', 0),
-(2, 'fruits', 'banana', 0);
+(1, 'fruits', 'apple', 1),
+(2, 'fruits', 'banana', 1);
 
 --
 -- Indexes for dumped tables
@@ -82,8 +114,15 @@ INSERT INTO `wordbank` (`wordbank_id`, `category`, `word`, `is_answered`) VALUES
 -- Indexes for table `games`
 --
 ALTER TABLE `games`
-  ADD PRIMARY KEY (`game_id`),
-  ADD KEY `fk_game_user_id` (`user_id`);
+  ADD PRIMARY KEY (`game_id`);
+
+--
+-- Indexes for table `responses`
+--
+ALTER TABLE `responses`
+  ADD PRIMARY KEY (`response_id`),
+  ADD KEY `fk_user_id` (`user_id`),
+  ADD KEY `fk_game_id` (`game_id`);
 
 --
 -- Indexes for table `users`
@@ -105,7 +144,13 @@ ALTER TABLE `wordbank`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `game_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `responses`
+--
+ALTER TABLE `responses`
+  MODIFY `response_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -124,10 +169,11 @@ ALTER TABLE `wordbank`
 --
 
 --
--- Constraints for table `games`
+-- Constraints for table `responses`
 --
-ALTER TABLE `games`
-  ADD CONSTRAINT `fk_game_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+ALTER TABLE `responses`
+  ADD CONSTRAINT `fk_game_id` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`),
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
