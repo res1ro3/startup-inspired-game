@@ -11,11 +11,22 @@ function Signin() {
 
     await axios.post("http://localhost:80/startup-inspired-game/api/signin.php", {
       email,
-      password
+      password,
+      token: localStorage.getItem("token")
     })
     .then((res) => {
-        // localStorage.setItem("token", res);
+        localStorage.setItem("token", res.data.token);
         alert(res.data.message);
+    })
+  }
+
+  const signOut = async(event) => {
+    event.preventDefault();
+
+    await axios.post("http://localhost:80/startup-inspired-game/api/signout.php")
+    .then((res) => {
+        localStorage.setItem("token", "");
+        alert(res.data);
     })
   }
 
@@ -35,6 +46,7 @@ function Signin() {
             <button onClick={handleSignin} type='submit' className='btn btn-primary'>Signin</button>
           </div>
         </form>
+        <button onClick={signOut} type='button' className='btn btn-primary'>Signout</button>
     </div>
     )
 } 
