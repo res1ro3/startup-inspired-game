@@ -86,7 +86,7 @@ function Test() {
     const check = async (e) => {
         e.preventDefault();
 
-        await axios.post('http://localhost:80/startup-inspired-game/api/wordbank.php', {
+        await axios.post('http://localhost:80/startup-inspired-game/api/response.php', {
             category: 'fruits',
             word: answer
         }).then((res) => {
