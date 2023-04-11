@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -8,17 +8,17 @@ import ManageUsers from '../components/admin/ManageUsers';
 import Test from '../components/Test';
 import Gameplay from '../components/Gameplay';
 
-  let loguser;
-  localStorage.getItem("user") ? loguser = localStorage.getItem("user") : "";
+let loguser;
+localStorage.getItem("user") ? loguser = localStorage.getItem("user") : loguser = "";
 
 function App() {
   
 
-  const [user, setUser] = useState(logUser);
+  const [user, setUser] = useState(loguser);
 
   return (
     <div className='App'>
-      <Navbar />
+      <Navbar user={user} />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />

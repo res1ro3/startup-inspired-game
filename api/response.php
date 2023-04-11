@@ -8,23 +8,31 @@
 
     $submitted = json_decode( file_get_contents('php://input') );
 
-    function addIncorrect($conn, $submitted) {
-        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES ('1', :cat, :wd, '0', '1')";
+    $sql = "SELECT user_id FROM users WHERE email = :em";
+    $query = $conn->prepare($sql);
+    $query->bindParam(':em', $submitted->email);
+    $query->execute();
+    $response = $query->fetch(PDO::FETCH_ASSOC);
+    $user_id = $response['user_id'];
+
+    function addIncorrect($conn, $submitted, $user_id) {
+        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES (:uid, :cat, :wd, '0', '1')";
         $query = $conn->prepare($sql);
         $query->bindParam(':cat', $submitted->category);
         $query->bindParam(':wd', $submitted->word);
+        $query->bindParam(':uid', $user_id);
         $query->execute();
     }
 
-    function addCorrect($conn, $submitted) {
-        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES ('1', :cat, :wd, '1', '1')";
+    function addCorrect($conn, $submitted, $user_id) {
+        $sql = "INSERT INTO `responses` (`user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES (:uid, :cat, :wd, '1', '1')";
         $query = $conn->prepare($sql);
         $query->bindParam(':cat', $submitted->category);
         $query->bindParam(':wd', $submitted->word);
+        $query->bindParam(':uid', $user_id);
         $query->execute();
     }
-
-
+    
     $sql = "SELECT * FROM `wordbank` WHERE word = :wd AND category = :cat";
     $query = $conn->prepare($sql);
     $query->bindParam(':cat', $submitted->category);
@@ -47,17 +55,17 @@
             $query->bindParam(':wd', $submitted->word);
             $query->execute();
             
-            addCorrect($conn, $submitted);
+            addCorrect($conn, $submitted, $user_id);
             $response = ['status' => 1, 'message' => 'Correct Answer.'];
             
             echo json_encode($response);
         } else {
-            addIncorrect($conn, $submitted);
+            addIncorrect($conn, $submitted, $user_id);
             $response = ['status' => 0, 'message' => 'Word is already answered.'];
             echo json_encode($response);
         }
     } else {
-        addIncorrect($conn, $submitted);
+        addIncorrect($conn, $submitted, $user_id);
         $response = ['status' => 0, 'message' => 'Word is not included in word bank.'];
         echo json_encode($response);
     }

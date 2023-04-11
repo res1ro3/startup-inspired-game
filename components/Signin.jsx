@@ -7,10 +7,11 @@ function Signin({user}) {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (userlog != null || userlog != "" || userlog != undefined) {
+    if (user) {
+      alert("You are already signed in");
       navigate("/home");
     }
-  },[userlog])
+  }, [user])
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,20 +24,9 @@ function Signin({user}) {
       password,
     })
     .then((res) => {
-      localStorage.setItem("user",res.data.email);
+      localStorage.setItem("user", res.data.email);
       alert(res.data.message);
-    })
-  }
-
-  const signOut = async(event) => {
-    event.preventDefault();
-
-    await axios.post("http://localhost:80/startup-inspired-game/api/signout.php", {
-      email: localStorage.getItem("user")
-    })
-    .then((res) => {
-        localStorage.setItem("user", "");
-        alert(res.data);
+      navigate("/home");
     })
   }
 
@@ -56,7 +46,6 @@ function Signin({user}) {
             <button onClick={handleSignin} type='submit' className='btn btn-primary'>Signin</button>
           </div>
         </form>
-        <button onClick={signOut} type='button' className='btn btn-primary'>Signout</button>
     </div>
     )
 } 

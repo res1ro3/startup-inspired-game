@@ -16,7 +16,9 @@ function Test() {
     const [timer, setTimer] = useState("00:00:00");
 
     const getScore = async () => {
-        await axios.get('http://localhost:80/startup-inspired-game/api/score.php')
+        await axios.post('http://localhost:80/startup-inspired-game/api/score.php',{
+            email: localStorage.getItem("user")
+        })
         .then((res) => {
             setScore(res.data);
         })
@@ -94,7 +96,8 @@ function Test() {
 
         await axios.post('http://localhost:80/startup-inspired-game/api/response.php', {
             category: 'fruits',
-            word: answer
+            word: answer,
+            email: localStorage.getItem('user')
         }).then((res) => {
             console.log(res.data.message);
         })
