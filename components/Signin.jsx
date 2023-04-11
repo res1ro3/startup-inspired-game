@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-function Signin() {
+function Signin({user}) {
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (userlog != null || userlog != "" || userlog != undefined) {
+      navigate("/home");
+    }
+  },[userlog])
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,20 +21,21 @@ function Signin() {
     await axios.post("http://localhost:80/startup-inspired-game/api/signin.php", {
       email,
       password,
-      token: localStorage.getItem("token")
     })
     .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        alert(res.data.message);
+      localStorage.setItem("user",res.data.email);
+      alert(res.data.message);
     })
   }
 
   const signOut = async(event) => {
     event.preventDefault();
 
-    await axios.post("http://localhost:80/startup-inspired-game/api/signout.php")
+    await axios.post("http://localhost:80/startup-inspired-game/api/signout.php", {
+      email: localStorage.getItem("user")
+    })
     .then((res) => {
-        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
         alert(res.data);
     })
   }
