@@ -26,7 +26,7 @@ function Home({hostaddress}) {
                     <h5 className="card-title">Game {game.game_id}</h5>
                     <p className="card-text">Category: {game.category}</p>
                     <p className="card-text">Started: {game.is_started}</p>
-                    <a href="/test" className="btn btn-primary">Join</a>
+                    <a href={"/play/"+game.game_id} className="btn btn-primary">Join</a>
                   </div>
                 </div>
               </div>

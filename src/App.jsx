@@ -28,8 +28,6 @@ function App() {
   const [user, setUser] = useState(loguser);
   const [admin, setAdmin] = useState(logadmin);
   const hostaddress = "localhost";
-
-  console.log(admin);
 // const hostaddress = "192.168.20.11";
 
   return (
@@ -39,8 +37,8 @@ function App() {
         <Route path='/' element={<Home hostaddress={hostaddress} />} />
         <Route path='/home' element={<Home hostaddress={hostaddress} />} />
         <Route element={<PrivateRouteUser hostaddress={hostaddress} user={user} />}>
-          <Route path='/test' element={<Test/>}/>
-          <Route path='/play' element={<Gameplay />}/>
+          <Route path='/test' element={<Test hostaddress={hostaddress} />}/>
+          <Route path='/play/:gid' element={<Gameplay hostaddress={hostaddress} />}/>
         </Route>
 
         <Route path='/signin' element={<Signin hostaddress={hostaddress} user={user} />}/>
