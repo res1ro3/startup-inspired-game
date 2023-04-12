@@ -11,6 +11,8 @@ import PrivateRouteUser from './routes/PrivateRouteUser';
 
 import ManageUsers from '../components/admin/ManageUsers';
 import AddUsers from '../components/admin/AddUsers';
+import ManageGames from '../components/admin/ManageGames';
+import AddGames from '../components/admin/AddGames';
 
 let loguser;
 localStorage.getItem("user") ? loguser = localStorage.getItem("user") : loguser = "";
@@ -32,9 +34,12 @@ function App() {
           <Route path='/play' element={<Gameplay />}/>
         </Route>
         <Route path='/signin' element={<Signin hostaddress={hostaddress} user={user} />}/>
-          
+
         <Route path='/admin/manageusers' element={<ManageUsers hostaddress={hostaddress} />} />
         <Route path='/admin/addusers' element={<AddUsers hostaddress={hostaddress} />} />
+        <Route path='/admin/managegames' element={<ManageGames hostaddress={hostaddress} />} />
+        <Route path='/admin/addgames' element={<AddGames hostaddress={hostaddress} />} />
+
       </Routes>
     </div>
   )

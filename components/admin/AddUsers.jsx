@@ -60,7 +60,7 @@ function AddUsers({hostaddress}) {
   return (
     <div className='addusers'>
         <Navpills />
-        <h1>Add User</h1>
+        <p className='fs-3 text-uppercase'>Add User</p>
         <form onSubmit={submitUser} className='needs-validation' noValidate>
             <div className="mb-3">
                 <label htmlFor="emailInp" className="form-label">Email address</label>
