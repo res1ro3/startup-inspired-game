@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 
-function Home() {
+function Home({hostaddress}) {
 
   const [gamelist, setGamelist] = useState([]);
 
   const getGames = async () => {
-    await axios.get('http://localhost:80/startup-inspired-game/api/games.php')
+    await axios.get('http://'+hostaddress+':80/startup-inspired-game/api/games.php')
     .then((res) => {
       setGamelist(res.data);
     })

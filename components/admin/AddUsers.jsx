@@ -3,7 +3,7 @@ import axios from "axios";
 import "../../styles/admin.css";
 import { useNavigate } from 'react-router-dom';
 
-function AddUsers() {
+function AddUsers({hostaddress}) {
 
     let navigate = useNavigate();
 
@@ -20,7 +20,7 @@ function AddUsers() {
     function submitUser(e) {
         e.preventDefault();
         if (password === confirmpassword) {
-            axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/user.php', {
+            axios.post('http://'+hostaddress+':80/startup-inspired-game/api/user.php', {
                 email,
                 password,
                 accountType

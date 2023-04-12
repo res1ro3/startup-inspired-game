@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/gameplay.css';
 
-function Gameplay({ testvar }) {
+function Gameplay({ hostaddress }) {
   
   const [score, setScore] = useState(0);
 
   const checkAnswer = async (e) => {
     e.preventDefault();
     
-    await axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/wordbank.php', {
+    await axios.post('http://'+hostaddress+':80/startup-inspired-game/api/wordbank.php', {
         category: 'fruits',
         word: answer
     }).then((res) => {
@@ -20,7 +20,6 @@ function Gameplay({ testvar }) {
   return (
     <div className='home'>
         <h1>Gameplay Test</h1>
-        <h5>{testvar}</h5>
         <div>
           <div id='scoreDiv' className='mb-3 bg-dark'>
             <h3>{score}</h3>

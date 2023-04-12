@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
-function ManageUsers() {
+function ManageUsers({hostaddress}) {
     const [users, setUsers] = useState([]);
     useEffect(() => {
         getUsers();
     }, []);
 
     function getUsers() {
-        axios.get('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/user.php', {
+        axios.get('http://'+hostaddress+':80/startup-inspired-game/api/user.php', {
             mode: 'cors',
         }).then(function(response) {
             setUsers(response.data);
@@ -17,7 +17,7 @@ function ManageUsers() {
     }
 
     function deleteUser(uid) {
-        axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/deleteuser.php', {
+        axios.post('http://'+hostaddress+':80/startup-inspired-game/api/deleteuser.php', {
             user_id: uid,
             mode: 'cors',
         }).then(function(response) {

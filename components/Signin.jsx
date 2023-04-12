@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-function Signin({user}) {
+function Signin({hostaddress, user}) {
 
   let navigate = useNavigate();
 
@@ -19,7 +19,7 @@ function Signin({user}) {
   const handleSignin = async(event) => {
     event.preventDefault();
 
-    await axios.post("http://"+process.env.DOSTIP+":80/startup-inspired-game/api/signin.php", {
+    await axios.post("http://"+hostaddress+":80/startup-inspired-game/api/signin.php", {
       email,
       password,
     })

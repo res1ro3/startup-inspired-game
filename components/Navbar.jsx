@@ -2,12 +2,12 @@ import axios from 'axios';
 import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar({user}) {
+function Navbar({hostaddress, user}) {
 
   const signOut = async(event) => {
     event.preventDefault();
 
-    await axios.post("http://"+process.env.DOSTIP+":80/startup-inspired-game/api/signout.php", {
+    await axios.post("http://"+hostaddress+":80/startup-inspired-game/api/signout.php", {
       email: localStorage.getItem("user")
     })
     .then((res) => {

@@ -4,7 +4,7 @@ import Gameplay from './Gameplay';
 
 let nextId = 0;
 
-function Test() {
+function Test({hostaddress}) {
     const [newword, setNewword] = useState('');
     const [wordbank, setWordbank] = useState([]);
     
@@ -16,7 +16,7 @@ function Test() {
     const [timer, setTimer] = useState("00:00:00");
 
     const getScore = async () => {
-        await axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/score.php',{
+        await axios.post('http://'+hostaddress+':80/startup-inspired-game/api/score.php',{
             email: localStorage.getItem("user")
         })
         .then((res) => {
@@ -94,7 +94,7 @@ function Test() {
     const check = async (e) => {
         e.preventDefault();
 
-        await axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/response.php', {
+        await axios.post('http://'+hostaddress+':80/startup-inspired-game/api/response.php', {
             category: 'fruits',
             word: answer,
             email: localStorage.getItem('user')
@@ -115,7 +115,7 @@ function Test() {
 
     const resetAnswers = async (e, resType) => {
         e.preventDefault();
-        await axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/reset.php', {
+        await axios.post('http://'+hostaddress+':80/startup-inspired-game/api/reset.php', {
             type: 'answers'
         })
         .then((res) => {
@@ -124,7 +124,7 @@ function Test() {
     }
     const resetResponses = async (e, resType) => {
         e.preventDefault();
-        await axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/reset.php', {
+        await axios.post('http://'+hostaddress+':80/startup-inspired-game/api/reset.php', {
             type: 'responses'
         })
         .then((res) => {
