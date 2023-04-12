@@ -6,11 +6,12 @@
     header('Access-Control-Allow-Credentials: true');
 
     $user = json_decode( file_get_contents('php://input') );
-    $sql = "SELECT * FROM users WHERE email = :em AND is_active = 0";
+    $sql = "SELECT account_type FROM users WHERE email = :em AND is_active = 0";
     $query = $conn->prepare($sql);
     $query->bindParam(':em', $user->email);
     $query->execute();
     $response = $query->fetch(PDO::FETCH_ASSOC);
+    $accountType = $response['account_type'];
 
     if ($response) {
         $sql = "SELECT * FROM users WHERE email = :em AND password = :ps";
@@ -26,7 +27,7 @@
         $query->execute();
 
         if($response) {
-            $response = ['status' => 1, 'message' => 'Signin Successful.', 'email' => $user->email];
+            $response = ['status' => 1, 'accountType' => $accountType, 'message' => 'Signin Successful.', 'email' => $user->email];
         } else {
             $response = ['status' => 0, 'message' => 'Email and Password does not match.'];
         }

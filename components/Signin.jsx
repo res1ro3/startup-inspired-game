@@ -24,6 +24,7 @@ function Signin({hostaddress, user}) {
       password,
     })
     .then((res) => {
+      sessionStorage.setItem("accountType", res.data.accountType);
       localStorage.setItem("user", res.data.email);
       alert(res.data.message);
       navigate("/home");

@@ -1,8 +1,14 @@
 import axios from 'axios';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
 function Navbar({hostaddress, user}) {
+
+  const [accountType, setAccountType] = useState("");
+
+  useEffect(()=> {
+    setAccountType(sessionStorage.getItem("accountType"));
+  })
 
   const signOut = async(event) => {
     event.preventDefault();
@@ -11,6 +17,7 @@ function Navbar({hostaddress, user}) {
       email: localStorage.getItem("user")
     })
     .then((res) => {
+        sessionStorage.removeItem("accountType");
         localStorage.removeItem("user");
         alert(res.data);
         window.location.reload();
@@ -26,8 +33,9 @@ function Navbar({hostaddress, user}) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li><Link className='nav-link active' to='/home'>Home</Link></li>
+              <li><Link className='nav-link' to='/home'>Home</Link></li>
               {user ? <li className='nav-link' style={{cursor: "pointer"}} onClick={signOut}>Sign Out</li> : <li><Link className='nav-link' to='/signin'>Sign In</Link></li>}
+              {accountType === "Admin" ? <li><Link className='nav-link' to='/admin/manageusers'>Admin</Link></li> : ""}
             </ul>
           </div>
         </div>
