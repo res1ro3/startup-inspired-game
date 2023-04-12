@@ -23,8 +23,8 @@ function Navbar({hostaddress, user}) {
             <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Wordbank</a>
                 <ul className="dropdown-menu">
-                    <li><Link className='dropdown-item' to='/admin/managegames'>Manage Wordbank</Link></li>
-                    <li><Link className='dropdown-item' to='/admin/addgames'>Add Words</Link></li>
+                    <li><Link className='dropdown-item' to='/admin/managewordbank'>Manage Wordbank</Link></li>
+                    <li><Link className='dropdown-item' to='/admin/addwords'>Add Words</Link></li>
                 </ul>
             </li>
         </ul>

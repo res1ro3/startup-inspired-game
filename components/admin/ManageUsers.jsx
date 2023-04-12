@@ -18,9 +18,10 @@ function ManageUsers({hostaddress}) {
     }
 
     function deleteUser(uid) {
-        axios.post('http://'+hostaddress+':80/startup-inspired-game/api/deleteuser.php', {
+        axios.post('http://'+hostaddress+':80/startup-inspired-game/api/delete.php', {
             user_id: uid,
             mode: 'cors',
+            type: 'users'
         }).then(function(response) {
             alert(response.data.message);
             window.location.reload();

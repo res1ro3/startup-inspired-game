@@ -13,6 +13,8 @@ import ManageUsers from '../components/admin/ManageUsers';
 import AddUsers from '../components/admin/AddUsers';
 import ManageGames from '../components/admin/ManageGames';
 import AddGames from '../components/admin/AddGames';
+import ManageWordbank from '../components/admin/ManageWordbank';
+import AddWords from '../components/admin/AddWords';
 
 let loguser;
 localStorage.getItem("user") ? loguser = localStorage.getItem("user") : loguser = "";
@@ -39,6 +41,8 @@ function App() {
         <Route path='/admin/addusers' element={<AddUsers hostaddress={hostaddress} />} />
         <Route path='/admin/managegames' element={<ManageGames hostaddress={hostaddress} />} />
         <Route path='/admin/addgames' element={<AddGames hostaddress={hostaddress} />} />
+        <Route path='/admin/managewordbank' element={<ManageWordbank hostaddress={hostaddress} />} />
+        <Route path='/admin/addwords' element={<AddWords hostaddress={hostaddress} />} />
 
       </Routes>
     </div>

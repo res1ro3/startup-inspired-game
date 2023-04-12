@@ -2,26 +2,26 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Navpills from "./Navpills";
 
-function ManageGames({hostaddress}) {
-    const [games, setGames] = useState([]);
+function ManageWordbank({hostaddress}) {
+    const [words, setWords] = useState([]);
     useEffect(() => {
-        getGames();
+        getWords();
     }, []);
 
-    function getGames() {
-        axios.get('http://'+hostaddress+':80/startup-inspired-game/api/games.php', {
+    function getWords() {
+        axios.get('http://'+hostaddress+':80/startup-inspired-game/api/words.php', {
             mode: 'cors',
         }).then(function(response) {
-            setGames(response.data);
+            setWords(response.data);
         });
         
     }
 
-    function deleteGame(gameId) {
+    function deleteWord(wordbank_id) {
         axios.post('http://'+hostaddress+':80/startup-inspired-game/api/delete.php', {
-            game_id: gameId,
+            wordbank_id,
             mode: 'cors',
-            type: 'games'
+            type: 'words'
         }).then(function(response) {
             alert(response.data.message);
             window.location.reload();
@@ -30,30 +30,30 @@ function ManageGames({hostaddress}) {
     }
 
   return (
-    <div className='managegames'>
+    <div className='managewordbank'>
         <Navpills />
-        <p className='fs-3 text-uppercase'>Manage Games</p>
+        <p className='fs-3 text-uppercase'>Manage Wordbank</p>
         <table className='table'>
             <thead>
                 <tr>
                     <th scope='col'>#</th>
-                    <th scope='col'>Game ID</th>
                     <th scope='col'>Category</th>
+                    <th scope='col'>Word</th>
                     <th scope='col'>Status</th>
                     <th scope='col'>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {games.map((game, key) =>
+                {words.map((word, key) =>
                         
                         <tr key={key}>
                             <th scope='row'>{key+1}</th>
-                            <td>{game.game_id}</td>
-                            <td>{game.category}</td>
-                            <td>{game.is_started == 0 ? "Not yet started" : "Started" }</td>
+                            <td>{word.category}</td>
+                            <td>{word.word}</td>
+                            <td>{word.is_answered == 0 ? "Not yet answered" : "Answered" }</td>
                             <td>
                                 {/* <Link to={`user/${user.id}/edit`} style={{marginRight: "10px"}}>Edit</Link> */}
-                                <button onClick={()=>deleteGame(game.game_id)} className='btn btn-danger'>Delete</button>
+                                <button onClick={()=>deleteWord(word.wordbank_id)} className='btn btn-danger'>Delete</button>
                             </td>
                         </tr>
                     )}
@@ -63,4 +63,4 @@ function ManageGames({hostaddress}) {
     )
 } 
 
-export default ManageGames
+export default ManageWordbank
