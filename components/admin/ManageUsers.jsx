@@ -11,8 +11,18 @@ function ManageUsers() {
         axios.get('http://192.168.20.11:80/startup-inspired-game/api/user.php', {
             mode: 'cors',
         }).then(function(response) {
-            console.log(response);
             setUsers(response.data);
+        });
+        
+    }
+
+    function deleteUser(uid) {
+        axios.post('http://192.168.20.11:80/startup-inspired-game/api/deleteuser.php', {
+            user_id: uid,
+            mode: 'cors',
+        }).then(function(response) {
+            alert(response.data.message);
+            window.location.reload();
         });
         
     }
@@ -20,26 +30,27 @@ function ManageUsers() {
   return (
     <div className='manageusers'>
         <h1>Manage Users</h1>
-        <table>
+        <table className='table'>
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Account Type</th>
-                    <th>Actions</th>
+                    <th scope='col'>#</th>
+                    <th scope='col'>Email</th>
+                    <th scope='col'>Password</th>
+                    <th scope='col'>Account Type</th>
+                    <th scope='col'>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {users.map((user, key) =>
+                        
                         <tr key={key}>
-                            <td>{user.user_id}</td>
+                            <th scope='row'>{key+1}</th>
                             <td>{user.email}</td>
                             <td>{user.password}</td>
                             <td>{user.account_type}</td>
                             <td>
                                 {/* <Link to={`user/${user.id}/edit`} style={{marginRight: "10px"}}>Edit</Link> */}
-                                <button>Delete</button>
+                                <button onClick={()=>deleteUser(user.user_id)} className='btn btn-danger'>Delete</button>
                             </td>
                         </tr>
                     )}

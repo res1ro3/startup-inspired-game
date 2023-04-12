@@ -1,7 +1,7 @@
 <?php
     include "./dbconnect.php";
     header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+    header('Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
     header('Access-Control-Allow-Credentials: true');
 
@@ -43,22 +43,6 @@
             echo json_encode($response);
             break;
         }
-
-        // case "DELETE": {
-        //     $sql = "DELETE FROM users WHERE id = :id";
-        //     $path = explode('/', $_SERVER['REQUEST_URI']);
-    
-        //     $query = $conn->prepare($sql);
-        //     $query->bindParam(':id', $path[3]);
-    
-        //     if($query->execute()) {
-        //         $response = ['status' => 1, 'message' => 'Record deleted successfully.'];
-        //     } else {
-        //         $response = ['status' => 0, 'message' => 'Failed to delete record.'];
-        //     }
-        //     echo json_encode($response);
-        //     break;
-        // }
 
         default: {
             echo "default";
