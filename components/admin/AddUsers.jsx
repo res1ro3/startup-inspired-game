@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import "../../styles/admin.css";
 import { useNavigate } from 'react-router-dom';
+import Navpills from "./Navpills";
 
 function AddUsers({hostaddress}) {
 
@@ -58,7 +59,8 @@ function AddUsers({hostaddress}) {
 
   return (
     <div className='addusers'>
-        <h1>Add Users</h1>
+        <Navpills />
+        <h1>Add User</h1>
         <form onSubmit={submitUser} className='needs-validation' noValidate>
             <div className="mb-3">
                 <label htmlFor="emailInp" className="form-label">Email address</label>

@@ -35,7 +35,6 @@ function App() {
           
         <Route path='/admin/manageusers' element={<ManageUsers hostaddress={hostaddress} />} />
         <Route path='/admin/addusers' element={<AddUsers hostaddress={hostaddress} />} />
-        
       </Routes>
     </div>
   )

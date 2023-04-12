@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Navpills from "./Navpills";
 
 function ManageUsers({hostaddress}) {
     const [users, setUsers] = useState([]);
@@ -29,6 +30,7 @@ function ManageUsers({hostaddress}) {
 
   return (
     <div className='manageusers'>
+        <Navpills />
         <h1>Manage Users</h1>
         <table className='table'>
             <thead>
