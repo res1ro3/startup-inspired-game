@@ -18,16 +18,18 @@ import AddWords from '../components/admin/AddWords';
 import PrivateRouteAdmin from './routes/PrivateRouteAdmin';
 
 let loguser;
-localStorage.getItem("user") ? loguser = localStorage.getItem("user") : loguser = "";
+localStorage.getItem("user") ? loguser = localStorage.getItem("user") : loguser = false;
 
 let logadmin;
-localStorage.getItem("admin") ? logadmin = localStorage.getItem("admin") : logadmin = "";
+sessionStorage.getItem("accountType") == "Admin" ? logadmin = true : logadmin = false;
 
 function App() {  
 
   const [user, setUser] = useState(loguser);
   const [admin, setAdmin] = useState(logadmin);
   const hostaddress = "localhost";
+
+  console.log(admin);
 // const hostaddress = "192.168.20.11";
 
   return (
@@ -40,9 +42,11 @@ function App() {
           <Route path='/test' element={<Test/>}/>
           <Route path='/play' element={<Gameplay />}/>
         </Route>
+
         <Route path='/signin' element={<Signin hostaddress={hostaddress} user={user} />}/>
 
-        <Route element={<PrivateRouteAdmin hostaddress={hostaddress} user={user} admin={admin} />}>
+        <Route element={<PrivateRouteAdmin hostaddress={hostaddress} admin={admin} />}>
+          <Route path='/admin' element={<ManageUsers hostaddress={hostaddress} />} />
           <Route path='/admin/manageusers' element={<ManageUsers hostaddress={hostaddress} />} />
           <Route path='/admin/addusers' element={<AddUsers hostaddress={hostaddress} />} />
           <Route path='/admin/managegames' element={<ManageGames hostaddress={hostaddress} />} />
@@ -50,9 +54,6 @@ function App() {
           <Route path='/admin/managewordbank' element={<ManageWordbank hostaddress={hostaddress} />} />
           <Route path='/admin/addwords' element={<AddWords hostaddress={hostaddress} />} />
         </Route>
-
-        
-
       </Routes>
     </div>
   )

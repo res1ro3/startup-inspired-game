@@ -1,9 +1,9 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-const PrivateRouteUser = ({user, admin}) => {
+const PrivateRouteUser = ({admin}) => {
   return (
-    user ? <Outlet /> : <Navigate to="/signin" />
+    admin ? <Outlet /> : <Navigate to="/home" />
   )
 }
 
