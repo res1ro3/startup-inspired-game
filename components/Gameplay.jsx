@@ -9,7 +9,7 @@ function Gameplay({ testvar }) {
   const checkAnswer = async (e) => {
     e.preventDefault();
     
-    await axios.post('http://192.168.20.11:80/startup-inspired-game/api/wordbank.php', {
+    await axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/wordbank.php', {
         category: 'fruits',
         word: answer
     }).then((res) => {

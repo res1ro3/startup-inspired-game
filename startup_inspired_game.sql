@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2023 at 01:19 PM
+-- Generation Time: Apr 12, 2023 at 10:49 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -38,7 +38,8 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`game_id`, `category`, `is_started`) VALUES
-(1, 'fruits', 0);
+(1, 'fruits', 0),
+(2, 'places', 0);
 
 -- --------------------------------------------------------
 
@@ -55,16 +56,6 @@ CREATE TABLE `responses` (
   `game_id` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `responses`
---
-
-INSERT INTO `responses` (`response_id`, `user_id`, `category`, `word`, `is_correct`, `game_id`) VALUES
-(1, 1, 'fruits', 'apple', 1, 1),
-(2, 1, 'fruits', 'banana', 1, 1),
-(3, 1, 'fruits', 'baka', 0, 1),
-(4, 1, 'fruits', 'saging', 0, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -75,15 +66,16 @@ CREATE TABLE `users` (
   `user_id` int(16) NOT NULL,
   `email` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
-  `account_type` varchar(64) NOT NULL
+  `account_type` varchar(64) NOT NULL,
+  `is_active` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `email`, `password`, `account_type`) VALUES
-(1, 'reserve1@ro3.dost.gov.ph', '12345678', 'Admin');
+INSERT INTO `users` (`user_id`, `email`, `password`, `account_type`, `is_active`) VALUES
+(1, 'reserve1@ro3.dost.gov.ph', '12345678', 'Admin', 0);
 
 -- --------------------------------------------------------
 
@@ -103,8 +95,8 @@ CREATE TABLE `wordbank` (
 --
 
 INSERT INTO `wordbank` (`wordbank_id`, `category`, `word`, `is_answered`) VALUES
-(1, 'fruits', 'apple', 1),
-(2, 'fruits', 'banana', 1);
+(1, 'fruits', 'apple', 0),
+(2, 'fruits', 'banana', 0);
 
 --
 -- Indexes for dumped tables
@@ -144,19 +136,19 @@ ALTER TABLE `wordbank`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `game_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `game_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `responses`
 --
 ALTER TABLE `responses`
-  MODIFY `response_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `response_id` int(16) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `wordbank`

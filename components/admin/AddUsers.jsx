@@ -20,7 +20,7 @@ function AddUsers() {
     function submitUser(e) {
         e.preventDefault();
         if (password === confirmpassword) {
-            axios.post('http://192.168.20.11:80/startup-inspired-game/api/user.php', {
+            axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/user.php', {
                 email,
                 password,
                 accountType

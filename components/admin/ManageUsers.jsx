@@ -8,7 +8,7 @@ function ManageUsers() {
     }, []);
 
     function getUsers() {
-        axios.get('http://192.168.20.11:80/startup-inspired-game/api/user.php', {
+        axios.get('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/user.php', {
             mode: 'cors',
         }).then(function(response) {
             setUsers(response.data);
@@ -17,7 +17,7 @@ function ManageUsers() {
     }
 
     function deleteUser(uid) {
-        axios.post('http://192.168.20.11:80/startup-inspired-game/api/deleteuser.php', {
+        axios.post('http://'+process.env.DOSTIP+':80/startup-inspired-game/api/deleteuser.php', {
             user_id: uid,
             mode: 'cors',
         }).then(function(response) {
