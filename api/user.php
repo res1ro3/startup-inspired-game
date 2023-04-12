@@ -20,36 +20,45 @@
 
         case "POST": {
             $user = json_decode( file_get_contents('php://input') );
-            $sql = "INSERT INTO users(user_id, email, password, account_type) VALUES(null, :em, :ps, :at)";
+            $sql = "SELECT email FROM users WHERE email = :em";
             $query = $conn->prepare($sql);
             $query->bindParam(':em', $user->email);
-            $query->bindParam(':ps', $user->password);
-            $query->bindParam(':at', $user->account_type);
+            $query->execute();
 
-            if($query->execute()) {
-                $response = ['status' => 1, 'message' => 'Record created successfully.'];
+            if ($query->rowCount() > 0) {
+                $response = ['status' => 0, 'message' => 'Email already exists.'];
             } else {
-                $response = ['status' => 0, 'message' => 'Failed to create record.'];
+                $sql = "INSERT INTO users(user_id, email, password, account_type) VALUES(null, :em, :ps, :at)";
+                $query = $conn->prepare($sql);
+                $query->bindParam(':em', $user->email);
+                $query->bindParam(':ps', $user->password);
+                $query->bindParam(':at', $user->accountType);
+
+                if($query->execute()) {
+                    $response = ['status' => 1, 'message' => 'User created successfully.'];
+                } else {
+                    $response = ['status' => 0, 'message' => 'Failed to create user.'];
+                }
             }
             echo json_encode($response);
             break;
         }
 
-        case "DELETE": {
-            $sql = "DELETE FROM users WHERE id = :id";
-            $path = explode('/', $_SERVER['REQUEST_URI']);
+        // case "DELETE": {
+        //     $sql = "DELETE FROM users WHERE id = :id";
+        //     $path = explode('/', $_SERVER['REQUEST_URI']);
     
-            $query = $conn->prepare($sql);
-            $query->bindParam(':id', $path[3]);
+        //     $query = $conn->prepare($sql);
+        //     $query->bindParam(':id', $path[3]);
     
-            if($query->execute()) {
-                $response = ['status' => 1, 'message' => 'Record deleted successfully.'];
-            } else {
-                $response = ['status' => 0, 'message' => 'Failed to delete record.'];
-            }
-            echo json_encode($response);
-            break;
-        }
+        //     if($query->execute()) {
+        //         $response = ['status' => 1, 'message' => 'Record deleted successfully.'];
+        //     } else {
+        //         $response = ['status' => 0, 'message' => 'Failed to delete record.'];
+        //     }
+        //     echo json_encode($response);
+        //     break;
+        // }
 
         default: {
             echo "default";

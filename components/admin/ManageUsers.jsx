@@ -8,7 +8,7 @@ function ManageUsers() {
     }, []);
 
     function getUsers() {
-        axios.get('http://localhost:80/startup-inspired-game/api/user.php', {
+        axios.get('http://192.168.20.11:80/startup-inspired-game/api/user.php', {
             mode: 'cors',
         }).then(function(response) {
             console.log(response);

@@ -4,9 +4,12 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Home from '../components/Home';
 import Signin from '../components/Signin';
-import ManageUsers from '../components/admin/ManageUsers';
 import Test from '../components/Test';
 import Gameplay from '../components/Gameplay';
+import PrivateRouteUser from './routes/PrivateRouteUser';
+
+import ManageUsers from '../components/admin/ManageUsers';
+import AddUsers from '../components/admin/AddUsers';
 
 let loguser;
 localStorage.getItem("user") ? loguser = localStorage.getItem("user") : loguser = "";
@@ -22,10 +25,15 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
-        <Route path='/signin' element={<Signin user={user} />} />
+        <Route element={<PrivateRouteUser user={user} />}>
+          <Route path='/test' element={<Test/>}/>
+          <Route path='/play' element={<Gameplay />}/>
+        </Route>
+        <Route path='/signin' element={<Signin user={user} />}/>
+          
         <Route path='/admin/manageusers' element={<ManageUsers />} />
-        <Route path='/test' element={<Test />}></Route>
-        <Route path='/play' element={<Gameplay />}></Route>
+        <Route path='/admin/addusers' element={<AddUsers />} />
+        
       </Routes>
     </div>
   )

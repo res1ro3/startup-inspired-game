@@ -6,7 +6,7 @@ function Home() {
   const [gamelist, setGamelist] = useState([]);
 
   const getGames = async () => {
-    await axios.get('http://localhost:80/startup-inspired-game/api/games.php')
+    await axios.get('http://192.168.20.11:80/startup-inspired-game/api/games.php')
     .then((res) => {
       setGamelist(res.data);
     })

@@ -7,7 +7,7 @@ function Navbar({user}) {
   const signOut = async(event) => {
     event.preventDefault();
 
-    await axios.post("http://localhost:80/startup-inspired-game/api/signout.php", {
+    await axios.post("http://192.168.20.11:80/startup-inspired-game/api/signout.php", {
       email: localStorage.getItem("user")
     })
     .then((res) => {

@@ -19,7 +19,7 @@ function Signin({user}) {
   const handleSignin = async(event) => {
     event.preventDefault();
 
-    await axios.post("http://localhost:80/startup-inspired-game/api/signin.php", {
+    await axios.post("http://192.168.20.11:80/startup-inspired-game/api/signin.php", {
       email,
       password,
     })
