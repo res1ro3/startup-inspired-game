@@ -2,3 +2,17 @@
     width: 75%;
     margin: auto;
 }
+
+table th {
+    text-align: center;
+}
+
+tbody tr {
+    text-align: center;
+}
+
+tr .action-td {
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+}

@@ -27,8 +27,8 @@ function App() {
 
   const [user, setUser] = useState(loguser);
   const [admin, setAdmin] = useState(logadmin);
-  const hostaddress = "localhost";
-// const hostaddress = "192.168.20.11";
+  // const hostaddress = "localhost";
+  const hostaddress = "192.168.20.11";
 
   return (
     <div className='App'>
